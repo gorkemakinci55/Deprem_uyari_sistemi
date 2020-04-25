@@ -1,4 +1,4 @@
-"Core/Inc/bma400.o"
+"Core/Src/bma400.o"
 "Core/Src/bma400_work_functions.o"
 "Core/Src/main.o"
 "Core/Src/spi_bma_interface.o"

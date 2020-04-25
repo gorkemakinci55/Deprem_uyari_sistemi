@@ -116,16 +116,16 @@ int main(void)
 
 
 
- // int8_t hal_spi_write_register
+  // int8_t hal_spi_write_register
   /* USER CODE BEGIN 2 */
-    //1.Activate SPI line, make CS LOW
-    HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
-    //2.Transmit register address
-    HAL_SPI_Transmit(&hspi1,registerBuffer,1,HAL_MAX_DELAY);
-    //3.Read register data
-    HAL_SPI_Receive(&hspi1,&registerBuffer[1],1,HAL_MAX_DELAY);
-    //4.Deactiviate SPI line, make CS HIGH
-    HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
+  //1.Activate SPI line, make CS LOW
+  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+  //2.Transmit register address
+  HAL_SPI_Transmit(&hspi1,registerBuffer,1,HAL_MAX_DELAY);
+  //3.Read register data
+  HAL_SPI_Receive(&hspi1,&registerBuffer[1],1,HAL_MAX_DELAY);
+  //4.Deactiviate SPI line, make CS HIGH
+  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */

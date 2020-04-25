@@ -67,9 +67,9 @@ c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externalt
 c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-nano-msizer.o)
                               c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-nano-reallocr.o) (_malloc_usable_size_r)
 c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_thumb1_case_uqi.o)
-                              Core/Inc/bma400.o (__gnu_thumb1_case_uqi)
+                              Core/Src/bma400.o (__gnu_thumb1_case_uqi)
 c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_thumb1_case_uhi.o)
-                              Core/Inc/bma400.o (__gnu_thumb1_case_uhi)
+                              Core/Src/bma400.o (__gnu_thumb1_case_uhi)
 c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_udivsi3.o)
                               Core/Src/system_stm32l0xx.o (__aeabi_uidiv)
 c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_divsi3.o)
@@ -119,51 +119,51 @@ Discarded input sections
  .ARM.exidx     0x0000000000000000        0x8 c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o
  .ARM.attributes
                 0x0000000000000000       0x1b c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o
- .text          0x0000000000000000        0x0 Core/Inc/bma400.o
- .data          0x0000000000000000        0x0 Core/Inc/bma400.o
- .bss           0x0000000000000000        0x0 Core/Inc/bma400.o
+ .text          0x0000000000000000        0x0 Core/Src/bma400.o
+ .data          0x0000000000000000        0x0 Core/Src/bma400.o
+ .bss           0x0000000000000000        0x0 Core/Src/bma400.o
  .text.check_mapped_interrupts
-                0x0000000000000000       0x20 Core/Inc/bma400.o
+                0x0000000000000000       0x20 Core/Src/bma400.o
  .text.unpack_accel.isra.1
-                0x0000000000000000       0xec Core/Inc/bma400.o
+                0x0000000000000000       0xec Core/Src/bma400.o
  .text.bma400_set_regs
-                0x0000000000000000       0x6c Core/Inc/bma400.o
+                0x0000000000000000       0x6c Core/Src/bma400.o
  .text.bma400_soft_reset
-                0x0000000000000000       0x44 Core/Inc/bma400.o
+                0x0000000000000000       0x44 Core/Src/bma400.o
  .text.bma400_set_power_mode
-                0x0000000000000000       0x52 Core/Inc/bma400.o
+                0x0000000000000000       0x52 Core/Src/bma400.o
  .text.bma400_get_power_mode
-                0x0000000000000000       0x2a Core/Inc/bma400.o
+                0x0000000000000000       0x2a Core/Src/bma400.o
  .text.bma400_get_accel_data
-                0x0000000000000000       0xbc Core/Inc/bma400.o
+                0x0000000000000000       0xbc Core/Src/bma400.o
  .text.bma400_set_sensor_conf
-                0x0000000000000000      0x49e Core/Inc/bma400.o
+                0x0000000000000000      0x49e Core/Src/bma400.o
  .text.bma400_get_sensor_conf
-                0x0000000000000000      0x2a6 Core/Inc/bma400.o
+                0x0000000000000000      0x2a6 Core/Src/bma400.o
  .text.bma400_set_device_conf
-                0x0000000000000000      0x322 Core/Inc/bma400.o
+                0x0000000000000000      0x322 Core/Src/bma400.o
  .text.bma400_get_device_conf
-                0x0000000000000000      0x16e Core/Inc/bma400.o
+                0x0000000000000000      0x16e Core/Src/bma400.o
  .text.bma400_get_interrupt_status
-                0x0000000000000000       0x36 Core/Inc/bma400.o
+                0x0000000000000000       0x36 Core/Src/bma400.o
  .text.bma400_set_step_counter_param
-                0x0000000000000000       0x1e Core/Inc/bma400.o
+                0x0000000000000000       0x1e Core/Src/bma400.o
  .text.bma400_get_steps_counted
-                0x0000000000000000       0x36 Core/Inc/bma400.o
+                0x0000000000000000       0x36 Core/Src/bma400.o
  .text.bma400_get_temperature_data
-                0x0000000000000000       0x30 Core/Inc/bma400.o
+                0x0000000000000000       0x30 Core/Src/bma400.o
  .text.bma400_get_interrupts_enabled
-                0x0000000000000000       0xb0 Core/Inc/bma400.o
+                0x0000000000000000       0xb0 Core/Src/bma400.o
  .text.bma400_enable_interrupt
-                0x0000000000000000      0x118 Core/Inc/bma400.o
+                0x0000000000000000      0x118 Core/Src/bma400.o
  .text.bma400_get_fifo_data
-                0x0000000000000000      0x100 Core/Inc/bma400.o
+                0x0000000000000000      0x100 Core/Src/bma400.o
  .text.bma400_extract_accel
-                0x0000000000000000      0x21e Core/Inc/bma400.o
+                0x0000000000000000      0x21e Core/Src/bma400.o
  .text.bma400_set_fifo_flush
-                0x0000000000000000       0x22 Core/Inc/bma400.o
+                0x0000000000000000       0x22 Core/Src/bma400.o
  .text.bma400_perform_self_test
-                0x0000000000000000      0x134 Core/Inc/bma400.o
+                0x0000000000000000      0x134 Core/Src/bma400.o
  .text          0x0000000000000000        0x0 Core/Src/bma400_work_functions.o
  .data          0x0000000000000000        0x0 Core/Src/bma400_work_functions.o
  .bss           0x0000000000000000        0x0 Core/Src/bma400_work_functions.o
@@ -1166,7 +1166,7 @@ Linker script and memory map
 LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
 LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o
-LOAD Core/Inc/bma400.o
+LOAD Core/Src/bma400.o
 LOAD Core/Src/bma400_work_functions.o
 LOAD Core/Src/main.o
 LOAD Core/Src/spi_bma_interface.o
@@ -1248,12 +1248,12 @@ LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x0000000008000410                __clzsi2
  *(.text*)
  .text.null_ptr_check
-                0x000000000800044c       0x1e Core/Inc/bma400.o
+                0x000000000800044c       0x1e Core/Src/bma400.o
  .text.bma400_get_regs
-                0x000000000800046a       0x7c Core/Inc/bma400.o
+                0x000000000800046a       0x7c Core/Src/bma400.o
                 0x000000000800046a                bma400_get_regs
  .text.bma400_init
-                0x00000000080004e6       0x58 Core/Inc/bma400.o
+                0x00000000080004e6       0x58 Core/Src/bma400.o
                 0x00000000080004e6                bma400_init
  .text.quick_start_device_check
                 0x000000000800053e       0x16 Core/Src/bma400_work_functions.o
@@ -1728,7 +1728,7 @@ LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .ARM.attributes
                 0x000000000000001e       0x2c c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
  .ARM.attributes
-                0x000000000000004a       0x32 Core/Inc/bma400.o
+                0x000000000000004a       0x32 Core/Src/bma400.o
  .ARM.attributes
                 0x000000000000007c       0x32 Core/Src/bma400_work_functions.o
  .ARM.attributes
@@ -1834,7 +1834,7 @@ LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
 OUTPUT(deprem uyari.elf elf32-littlearm)
 
 .comment        0x0000000000000000       0x7b
- .comment       0x0000000000000000       0x7b Core/Inc/bma400.o
+ .comment       0x0000000000000000       0x7b Core/Src/bma400.o
                                          0x7c (size before relaxing)
  .comment       0x000000000000007b       0x7c Core/Src/bma400_work_functions.o
  .comment       0x000000000000007b       0x7c Core/Src/main.o
