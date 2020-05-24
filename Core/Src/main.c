@@ -21,6 +21,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+
+
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -49,6 +52,7 @@ UART_HandleTypeDef huart2;
 
 uint8_t* pData = 0;
 uint8_t  registerBuffer[2];
+uint8_t  dataBuffer[10];
 HAL_StatusTypeDef BMA400HalStatus = HAL_OK;
 /* USER CODE BEGIN PV */
 
@@ -86,7 +90,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+    bma400_dev* bma400ptr = 0;
+    int8_t bma400PtrReturn = 0;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -104,16 +109,23 @@ int main(void)
   MX_USART2_UART_Init();
   HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
   HAL_Delay(10);
+  /* Init BMA400 */
+  quick_start_device_check(bma400ptr,&hspi1);
 
+
+
+
+
+  // int8_t hal_spi_write_register
   /* USER CODE BEGIN 2 */
-    //1.Activate SPI line, make CS LOW
-    HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
-    //2.Transmit register address
-    HAL_SPI_Transmit(&hspi1,registerBuffer,1,HAL_MAX_DELAY);
-    //3.Read register data
-    HAL_SPI_Receive(&hspi1,&registerBuffer[1],1,HAL_MAX_DELAY);
-    //4.Deactiviate SPI line, make CS HIGH
-    HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
+  //1.Activate SPI line, make CS LOW
+  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+  //2.Transmit register address
+  HAL_SPI_Transmit(&hspi1,registerBuffer,1,HAL_MAX_DELAY);
+  //3.Read register data
+  HAL_SPI_Receive(&hspi1,&registerBuffer[1],1,HAL_MAX_DELAY);
+  //4.Deactiviate SPI line, make CS HIGH
+  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,6 +133,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
+
 
       BMA400HalStatus = HAL_SPI_Receive(&hspi1,dataBuffer,1,HAL_MAX_DELAY);
       if(BMA400HalStatus == HAL_OK){
