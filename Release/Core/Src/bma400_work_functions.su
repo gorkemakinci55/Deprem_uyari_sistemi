@@ -1,1 +1,2 @@
 bma400_work_functions.c:10:6:quick_start_device_check	8	static
+bma400_work_functions.c:20:6:sleep_mode_to_normal_mode	24	static

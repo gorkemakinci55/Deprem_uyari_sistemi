@@ -91,6 +91,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
     bma400_dev* bma400ptr = 0;
+    bma400_sensor_data sensorData;
     int8_t bma400PtrReturn = 0;
   /* USER CODE END Init */
 
@@ -111,6 +112,7 @@ int main(void)
   HAL_Delay(10);
   /* Init BMA400 */
   quick_start_device_check(bma400ptr,&hspi1);
+  sleep_mode_to_normal_mode(bma400ptr);
 
 
 

@@ -11,6 +11,7 @@
 #include "main.h"
 
 void quick_start_device_check(struct bma400_dev* bma, void* intfPointer);
+void sleep_mode_to_normal_mode(struct bma400_dev* bma);
 
 
 

@@ -1242,7 +1242,7 @@ struct bma400_device_conf
 /*
  * BMA400 sensor data
  */
-struct bma400_sensor_data
+typedef struct bma400_sensor_data
 {
     /* X-axis sensor data */
     int16_t x;
@@ -1255,7 +1255,7 @@ struct bma400_sensor_data
 
     /* sensor time */
     uint32_t sensortime;
-};
+}bma400_sensor_data;
 
 /*
  * BMA400 interrupt selection
