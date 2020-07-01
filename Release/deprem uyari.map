@@ -140,6 +140,8 @@ Discarded input sections
                 0x0000000000000000      0x16e Core/Src/bma400.o
  .text.bma400_get_interrupt_status
                 0x0000000000000000       0x36 Core/Src/bma400.o
+ .text.bma400_get_gen1_interrupt_status
+                0x0000000000000000        0x2 Core/Src/bma400.o
  .text.bma400_set_step_counter_param
                 0x0000000000000000       0x1e Core/Src/bma400.o
  .text.bma400_get_steps_counted
@@ -163,8 +165,26 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 Core/Src/bma400_work_functions.o
  .text.reading_acceleration_data
                 0x0000000000000000       0x68 Core/Src/bma400_work_functions.o
+ .text.init_activity_interrupt_on_gen1
+                0x0000000000000000       0x68 Core/Src/bma400_work_functions.o
  .rodata.reading_acceleration_data.str1.1
                 0x0000000000000000       0x7f Core/Src/bma400_work_functions.o
+ .text          0x0000000000000000        0x0 Core/Src/interrupt_bma400.o
+ .data          0x0000000000000000        0x0 Core/Src/interrupt_bma400.o
+ .bss           0x0000000000000000        0x0 Core/Src/interrupt_bma400.o
+ .text.mapping_gen1_interrupt_to_int1
+                0x0000000000000000        0xc Core/Src/interrupt_bma400.o
+ .text.interrupt_latching_selection
+                0x0000000000000000        0x2 Core/Src/interrupt_bma400.o
+ .text.generic1_interrupt_configuration
+                0x0000000000000000       0x16 Core/Src/interrupt_bma400.o
+ .text.generic1_interrupt_to_inactivity
+                0x0000000000000000        0x2 Core/Src/interrupt_bma400.o
+ .text.set_threshold_interrupt
+                0x0000000000000000        0x2 Core/Src/interrupt_bma400.o
+ .comment       0x0000000000000000       0x7c Core/Src/interrupt_bma400.o
+ .ARM.attributes
+                0x0000000000000000       0x32 Core/Src/interrupt_bma400.o
  .text          0x0000000000000000        0x0 Core/Src/main.o
  .data          0x0000000000000000        0x0 Core/Src/main.o
  .bss           0x0000000000000000        0x0 Core/Src/main.o
@@ -1166,6 +1186,7 @@ LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
 LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o
 LOAD Core/Src/bma400.o
 LOAD Core/Src/bma400_work_functions.o
+LOAD Core/Src/interrupt_bma400.o
 LOAD Core/Src/main.o
 LOAD Core/Src/spi_bma_interface.o
 LOAD Core/Src/stm32l0xx_hal_msp.o

@@ -1128,6 +1128,23 @@ int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev
     return rslt;
 }
 
+int8_t bma400_get_gen1_interrupt_status(uint8_t *int_status, const struct bma400_dev *dev)
+{
+    int8_t rslt;
+    uint8_t reg_data;
+
+    /* Check for null pointer in the device structure*/
+    rslt = null_ptr_check(dev);
+
+    /* Proceed if null check is fine */
+       if (rslt == BMA400_OK)
+       {
+
+
+       }
+
+}
+
 int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
