@@ -4,6 +4,8 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/bc.95.c \
+../Core/Src/bc95_work_functions.c \
 ../Core/Src/bma400.c \
 ../Core/Src/bma400_work_functions.c \
 ../Core/Src/main.c \
@@ -15,6 +17,8 @@ C_SRCS += \
 ../Core/Src/system_stm32l0xx.c 
 
 OBJS += \
+./Core/Src/bc.95.o \
+./Core/Src/bc95_work_functions.o \
 ./Core/Src/bma400.o \
 ./Core/Src/bma400_work_functions.o \
 ./Core/Src/main.o \
@@ -26,6 +30,8 @@ OBJS += \
 ./Core/Src/system_stm32l0xx.o 
 
 C_DEPS += \
+./Core/Src/bc.95.d \
+./Core/Src/bc95_work_functions.d \
 ./Core/Src/bma400.d \
 ./Core/Src/bma400_work_functions.d \
 ./Core/Src/main.d \
@@ -38,6 +44,10 @@ C_DEPS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
+Core/Src/bc.95.o: ../Core/Src/bc.95.c
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m0plus -std=gnu11 -DUSE_HAL_DRIVER -DSTM32L071xx -c -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/bc.95.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+Core/Src/bc95_work_functions.o: ../Core/Src/bc95_work_functions.c
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m0plus -std=gnu11 -DUSE_HAL_DRIVER -DSTM32L071xx -c -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/bc95_work_functions.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/Src/bma400.o: ../Core/Src/bma400.c
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m0plus -std=gnu11 -DUSE_HAL_DRIVER -DSTM32L071xx -c -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/bma400.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/Src/bma400_work_functions.o: ../Core/Src/bma400_work_functions.c

@@ -109,6 +109,11 @@ int main(void)
   MX_USART2_UART_Init();
   HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
   HAL_Delay(10);
+
+  /*Init BC95 */
+
+
+
   /* Init BMA400 */
   quick_start_device_check(bma400ptr,&hspi1);
 

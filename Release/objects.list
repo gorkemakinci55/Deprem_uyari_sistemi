@@ -1,3 +1,5 @@
+"Core/Src/bc.95.o"
+"Core/Src/bc95_work_functions.o"
 "Core/Src/bma400.o"
 "Core/Src/bma400_work_functions.o"
 "Core/Src/main.o"
