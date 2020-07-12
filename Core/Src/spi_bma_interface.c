@@ -8,22 +8,48 @@
 #include "spi_bma_interface.h"
 
 int8_t spi_register_write(void* intfPtr,  uint8_t spi_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t length){
-	HAL_StatusTypeDef BMA400HalStatus = HAL_OK;
-	BMA400HalStatus = HAL_SPI_Transmit(intfPtr, reg_addr, reg_data,length);
-	if(BMA400HalStatus == HAL_OK){
-		printf("spi_register_write_succesful");
-	}
-    else if(BMA400HalStatus == HAL_TIMEOUT){
-    	printf("spi_register_write_timeout");
-    }
-    else{
-    	printf("spi_register_write_error");
+
+    if(spi_id == CHIP_1){
+        HAL_StatusTypeDef BMA400HalStatusGpio = HAL_OK;
+        BMA400HalStatusGpio = HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+        if(BMA400HalStatusGpio == HAL_OK){
+            printf("spi_chip_select_pulled_down, transmit data");
+            HAL_StatusTypeDef BMA400HalStatusSpi = HAL_OK;
+            BMA400HalStatusSpi = HAL_SPI_Transmit(intfPtr, reg_addr, reg_data,length);
+            if(BMA400HalStatusSpi == HAL_OK){
+                printf("spi_register_write_succesful");
+            }
+            else if(BMA400HalStatusSpi == HAL_TIMEOUT){
+                printf("spi_register_write_timeout");
+            }
+            else{
+                printf("spi_register_write_error");
+            }
+        }
+        BMA400HalStatusGpio = HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
     }
 }
 
 int8_t spi_register_read(void* intfPtr,uint8_t spi_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t length){
-	HAL_StatusTypeDef BMA400HalStatus = HAL_OK;
-	BMA400HalStatus = HAL_SPI_Receive(intfPtr, reg_addr, reg_data,length);
+
+    if(spi_id == CHIP_1){
+        HAL_StatusTypeDef BMA400HalStatusGpio = HAL_OK;
+        BMA400HalStatusGpio = HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+        if(BMA400HalStatusGpio == HAL_OK){
+            printf("spi_chip_select_pulled_down, transmit data");
+            HAL_StatusTypeDef BMA400HalStatusSpi = HAL_OK;
+            BMA400HalStatusSpi = HAL_SPI_Receive(intfPtr, reg_addr, reg_data,length);
+            if(BMA400HalStatusSpi == HAL_OK){
+                printf("spi_register_read_succesful");
+            }
+            else if(BMA400HalStatusSpi == HAL_TIMEOUT){
+                printf("spi_register_read_timeout");
+            }
+            else{
+                printf("spi_register_read_error");
+            }
+        }
+    }
 }
 
 int8_t delay_function(int8_t delayTimer){
@@ -45,7 +71,7 @@ void set_interface(enum bma400_intf intf, struct bma400_dev *dev , void* intfPoi
             break;
         case BMA400_SPI_INTF:
             dev->intf_ptr = intfPointer; /* To attach your interface device reference */
-            dev->dev_id = 0; /* Could be used to identify the chip select line. */
+            dev->dev_id = CHIP_1; /* Could be used to identify the chip select line. */
             dev->delay_ms = delay_function;
             dev->read = spi_register_read;
             dev->write = spi_register_write;
