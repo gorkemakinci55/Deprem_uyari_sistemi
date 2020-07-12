@@ -8,6 +8,8 @@
 #ifndef INC_SPI_BMA_INTERFACE_H_
 #define INC_SPI_BMA_INTERFACE_H_
 
+#define CHIP_1 UINT8_C(0x01)
+
 #include "stm32l0xx_hal.h"
 #include "bma400_defs.h"
 #include "bma400.h"

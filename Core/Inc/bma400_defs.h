@@ -346,6 +346,7 @@
 #define BMA400_ACCEL_CONFIG_1_ADDR       UINT8_C(0x1A)
 #define BMA400_ACCEL_CONFIG_2_ADDR       UINT8_C(0x1B)
 #define BMA400_INT_CONF_0_ADDR           UINT8_C(0x1F)
+#define BMA400_INT_CONF_1_ADDR           UINT8_C(0x20)
 #define BMA400_INT_12_IO_CTRL_ADDR       UINT8_C(0x24)
 #define BMA400_INT_MAP_ADDR              UINT8_C(0x21)
 #define BMA400_FIFO_CONFIG_0_ADDR        UINT8_C(0x26)
@@ -357,6 +358,7 @@
 #define BMA400_WAKEUP_INT_CONF_0_ADDR    UINT8_C(0x2F)
 #define BMA400_ORIENTCH_INT_CONFIG_ADDR  UINT8_C(0x35)
 #define BMA400_GEN1_INT_CONFIG_ADDR      UINT8_C(0x3F)
+#define BMA400_GEN1_INT_CONFIG2_ADDR     UINT8_C(0x41)
 #define BMA400_GEN2_INT_CONFIG_ADDR      UINT8_C(0x4A)
 #define BMA400_ACT_CH_CONFIG_0_ADDR      UINT8_C(0x55)
 #define BMA400_TAP_CONFIG_ADDR           UINT8_C(0x57)
@@ -1242,7 +1244,7 @@ struct bma400_device_conf
 /*
  * BMA400 sensor data
  */
-struct bma400_sensor_data
+typedef struct bma400_sensor_data
 {
     /* X-axis sensor data */
     int16_t x;
@@ -1255,7 +1257,7 @@ struct bma400_sensor_data
 
     /* sensor time */
     uint32_t sensortime;
-};
+}bma400_sensor_data;
 
 /*
  * BMA400 interrupt selection

@@ -28,7 +28,7 @@ Core/Src/bma400_work_functions.o: ../Core/Src/bma400_work_functions.c \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart_ex.h \
  ../Core/Inc/bma400.h ../Core/Inc/bma400_defs.h \
- ../Core/Inc/spi_bma_interface.h
+ ../Core/Inc/spi_bma_interface.h ../Core/Inc/interrupt_bma400.h
 
 ../Core/Inc/bma400_work_functions.h:
 
@@ -93,3 +93,5 @@ Core/Src/bma400_work_functions.o: ../Core/Src/bma400_work_functions.c \
 ../Core/Inc/bma400_defs.h:
 
 ../Core/Inc/spi_bma_interface.h:
+
+../Core/Inc/interrupt_bma400.h:
