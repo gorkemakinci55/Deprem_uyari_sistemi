@@ -5,11 +5,28 @@
  *      Author: gorkem.akinci
  */
 
+#include "stm32l0xx_hal.h"
+
 #ifndef INC_BC95_DEFS_H_
 #define INC_BC95_DEFS_H_
 
+typedef int8_t (*bc95_com_fptr_t)(void *intfPtr, uint8_t *pData, uint16_t Size, uint32_t Timeout);
 
-struct bc95_dev{
+enum unsolicityStatus{
+
+    DISABLE_UNSOLICITY_RESULTCODE,
+    ENABLE_UNSOLICITY_RESULTCODE
+};
+
+enum connectionStatus {
+  // define bc95 connection status
+
+    IDLE_STATE,
+    CONNECTED_STATE
+
+};
+
+typedef struct bc95_dev{
 
     /* Interface handle pointer */
 
@@ -26,6 +43,6 @@ struct bc95_dev{
 };
 
 
-typedef int8_t (*bc95_com_fptr_t)(void *intfPtr, uint8_t reg_addr, uint8_t *reg_data, uint16_t length);
+
 
 #endif /* INC_BC95_DEFS_H_ */

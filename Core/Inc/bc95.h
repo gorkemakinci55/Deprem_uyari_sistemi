@@ -13,12 +13,19 @@
 #include "stdlib.h"
 #include "stdint.h"
 
-const char *atStartString  = "/r/nNeul/r/lOK/r/l";
 
 void set_bc95_uart_interface( struct bc95_dev *dev , void* intfPointer);
-int8_t uart_register_write(void* intfPtr,  uint8_t spi_id, uint8_t reg_addr,
-        uint8_t *reg_data, uint16_t length);
-int8_t uart_register_read(void* intfPtr,  uint8_t spi_id, uint8_t reg_addr,
-        uint8_t *reg_data, uint16_t length);
+int8_t uart_register_write(UART_HandleTypeDef* intfPtr, uint16_t dataSize,
+        uint8_t *reg_data, uint32_t timeOut);
+int8_t uart_register_read(UART_HandleTypeDef* intfPtr, uint16_t dataSize,
+        uint8_t *reg_data, uint32_t timeOut);
+
+
+
+void send_at_command(const char* AT_command, uint8_t* AT_response, void* intfPtr);
+
+void receive_at_command_response(const char* AT_command, uint8_t* AT_response, void* intfPtr);
+
+
 
 #endif /* INC_BC95_H_ */

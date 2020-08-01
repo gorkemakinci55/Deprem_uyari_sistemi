@@ -10,9 +10,9 @@
 int8_t spi_register_write(void* intfPtr,  uint8_t spi_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t length){
 
     if(spi_id == CHIP_1){
-        HAL_StatusTypeDef BMA400HalStatusGpio = HAL_OK;
-        BMA400HalStatusGpio = HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
-        if(BMA400HalStatusGpio == HAL_OK){
+
+         HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+
             printf("spi_chip_select_pulled_down, transmit data");
             HAL_StatusTypeDef BMA400HalStatusSpi = HAL_OK;
             BMA400HalStatusSpi = HAL_SPI_Transmit(intfPtr, reg_addr, reg_data,length);
@@ -25,17 +25,16 @@ int8_t spi_register_write(void* intfPtr,  uint8_t spi_id, uint8_t reg_addr, uint
             else{
                 printf("spi_register_write_error");
             }
-        }
-        BMA400HalStatusGpio = HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
+         HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
     }
 }
 
 int8_t spi_register_read(void* intfPtr,uint8_t spi_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t length){
 
     if(spi_id == CHIP_1){
-        HAL_StatusTypeDef BMA400HalStatusGpio = HAL_OK;
-        BMA400HalStatusGpio = HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
-        if(BMA400HalStatusGpio == HAL_OK){
+
+        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+
             printf("spi_chip_select_pulled_down, transmit data");
             HAL_StatusTypeDef BMA400HalStatusSpi = HAL_OK;
             BMA400HalStatusSpi = HAL_SPI_Receive(intfPtr, reg_addr, reg_data,length);
@@ -47,7 +46,6 @@ int8_t spi_register_read(void* intfPtr,uint8_t spi_id, uint8_t reg_addr, uint8_t
             }
             else{
                 printf("spi_register_read_error");
-            }
         }
     }
 }
