@@ -21,11 +21,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-
-
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "at_commands.h"
+#include "bc95.h"
+#include "bc95_work_functions.h"
+#include "bma400.h"
+#include "string.h"
+#include "data_queue.h"
 
 /* USER CODE END Includes */
 
@@ -44,16 +48,13 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi2;
+
+TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
-uint8_t* pData = 0;
-uint8_t  registerBuffer[2];
-uint8_t  dataBuffer[10];
-HAL_StatusTypeDef BMA400HalStatus = HAL_OK;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -61,16 +62,44 @@ HAL_StatusTypeDef BMA400HalStatus = HAL_OK;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_SPI1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-
+//void HAL_UART_RxCpltCallback(&huart2){
+//
+//
+//
+//}
+void bc95_init();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+struct bc95_dev *bc95;
+int AT_READY_FLAG = 0;
+int uartReady = 0;
+char  rxBuf[180];
+char parsedData[10][50];
+int wordIndex = 0;
+int charIndex = 0;
+queue dataQueue;
+char rxBuf_IT;
+int  AT_Transmit_FLag = 0;
+int AT_Waiting_Flag = 0;
+int DATA_READY = 0;
+int rx_callback_count = 0;
+int timAbortCount = 0;
+//char buffer1[14] = "AT+QLEDMODE=1";
+char buffer1[4] = "ATI";
+int rxIndex = 0;
+int count = 0;
+int rxcallbackCount = 0;
+int abourtCount = 0;
+HAL_StatusTypeDef gorkem = HAL_ERROR;
+
+
 
 /* USER CODE END 0 */
 
@@ -81,6 +110,9 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+    /* Init BMA400 */
+
+
 
   /* USER CODE END 1 */
 
@@ -90,9 +122,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-    bma400_dev* bma400ptr = 0;
-    bma400_sensor_data sensorData;
-    int8_t bma400PtrReturn = 0;
+
+  //bc95_at_start_check(bc95);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -104,61 +135,167 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_SPI1_Init();
   MX_SPI2_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
-  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
-  HAL_Delay(10);
-
-  /*Init BC95 */
-
-
-
-  /* Init BMA400 */
-  quick_start_device_check(bma400ptr,&hspi1);
-  sleep_mode_to_normal_mode(bma400ptr);
-
-
-
-
-
-  // int8_t hal_spi_write_register
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  //bc95_init();
+  //bma400_init();
   //1.Activate SPI line, make CS LOW
-  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+  //HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
   //2.Transmit register address
-  HAL_SPI_Transmit(&hspi1,registerBuffer,1,HAL_MAX_DELAY);
+
   //3.Read register data
-  HAL_SPI_Receive(&hspi1,&registerBuffer[1],1,HAL_MAX_DELAY);
+  //HAL_UART_Receive_IT(&huart1,buffer,4);
   //4.Deactiviate SPI line, make CS HIGH
-  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxBuf_IT,1);
+  HAL_TIM_Base_Start_IT(&htim2);
+//  HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET);
+//  HAL_Delay(3000);
+//  HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_RESET);
+//  HAL_UART_Receive_IT(&huart1,buffer,4);
+//  HAL_StatusTypeDef Mustafa = HAL_UART_Transmit(&huart1,buffer1,10,1000);
+//  HAL_StatusTypeDef Mustafa = HAL_UART_Transmit(&huart1,buffer1,14,1000);
+//  HAL_UART_Receive_IT(&huart1,buffer,4);
+//  HAL_StatusTypeDef gORKEM = HAL_UART_Receive(&huart1,buffer,50,10000);
+//  if(Mustafa == HAL_OK){
+//      HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET);
+//      HAL_Delay(6000);
+//      HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_RESET);
+//  }
+//HAL_UART_Receive(&huart1,buffer,10,1000);
+//HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET);
+//HAL_Delay(3000);
+//HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_RESET);
+//  HAL_UART_RxCpltCallback(&huart1);
+
+
+
+//HAL_Delay(3000);
   while (1)
   {
     /* USER CODE END WHILE */
 
-
-
-      BMA400HalStatus = HAL_SPI_Receive(&hspi1,dataBuffer,1,HAL_MAX_DELAY);
-      if(BMA400HalStatus == HAL_OK){
-
-      }
-      else if(BMA400HalStatus == HAL_TIMEOUT){
-
-      }
-      else{
-
-      }
-	  HAL_SPI_Transmit(&hspi1,dataBuffer,1,HAL_MAX_DELAY);
     /* USER CODE BEGIN 3 */
-  }
+      if(uartReady == 0){
+          gorkem = HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxBuf_IT,1);
+      }
+
+      while(DATA_READY){
+          uartReady = 1;
+
+          parsedData[wordIndex][charIndex] = dequeue(&dataQueue);
+          int temp2 = charIndex - 1;
+
+          if(parsedData[wordIndex][charIndex] == '\n' && parsedData[wordIndex][temp2] == '\r'){
+              //HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
+              charIndex = 0;
+              if(parsedData[wordIndex][0] == 'N' && parsedData[wordIndex][1] == 'e' && parsedData[wordIndex][2] == 'u' && parsedData[wordIndex][3] == 'l'){
+                  HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
+//                  wordIndex = 0;
+//                  charIndex = 0;
+                  AT_READY_FLAG = 1;
+                  //AT_Waiting_Flag = 1;
+                //  HAL_UART_AbortReceive_IT(&huart1);
+                  DATA_READY = 0;
+                  break;
+              }
+              ++wordIndex;
+              DATA_READY = 0;
+              break;
+          }
+          ++charIndex;
+          //          if(rxBuf[rxIndex] == 'K' && rxBuf[temp2] == 'O' && AT_READY_FLAG == 1 && AT_Waiting_Flag == 1){
+          //              DATA_READY = 0;
+          //              break;
+          //          }
+          DATA_READY = 0;
+      }
+
+      if(uartReady == 1 && AT_Transmit_FLag == 1 && AT_Waiting_Flag == 0){
+            //HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
+          switch (count){
+          case 0:
+
+              HAL_UART_Transmit_IT(&huart1,"AT+CGSN=1",9);
+              for(int i = 0; i< 10; ++i){
+                  memset(parsedData[i],0,50);
+              }
+              break;
+
+          case 1:
+              //HAL_UART_Transmit_IT(&huart1,"ATI",3);
+              break;
+
+          case 2:
+
+
+              //HAL_UART_Transmit_IT(&huart1,"ATE1",4);
+              break;
+
+          }
+
+      }
   /* USER CODE END 3 */
 }
+}
 
+  void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+
+      if(huart->Instance==USART1 ){
+           //HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
+           int succesful = enqueue(&dataQueue, rxBuf_IT);
+           DATA_READY = 1;
+           if(AT_Waiting_Flag == 1){
+               ++rxcallbackCount;
+           }
+           HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxBuf_IT, 1);
+      }
+  }
+
+
+  void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+
+       // HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_12);
+      //gorkem = HAL_UART_GetState(&huart1);
+        AT_Transmit_FLag = 0;
+
+        AT_Waiting_Flag = 1;
+        HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxBuf_IT,1);
+        ++count;
+  }
+
+  void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *huart){
+
+      if(huart->Instance==USART1 ){
+          clear_queue(&dataQueue);
+
+          gorkem = HAL_UART_GetState(&huart1);
+          ++abourtCount;
+          AT_Transmit_FLag = 1;
+      }
+  }
+
+  void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+
+      if(htim->Instance == TIM2){
+          if((gorkem = HAL_UART_GetState(&huart1)) == HAL_UART_STATE_BUSY_RX && (AT_Waiting_Flag == 1 || AT_READY_FLAG == 1)){
+              HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_12);
+              AT_Waiting_Flag = 0;
+              ++timAbortCount;
+              HAL_UART_AbortReceive_IT(&huart1);
+          }
+
+        //  HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_12);
+          HAL_TIM_Base_Start_IT(&htim2);
+      }
+  }
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -174,11 +311,12 @@ void SystemClock_Config(void)
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
-  RCC_OscInitStruct.MSIState = RCC_MSI_ON;
-  RCC_OscInitStruct.MSICalibrationValue = 0;
-  RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_5;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLLMUL_4;
+  RCC_OscInitStruct.PLL.PLLDIV = RCC_PLLDIV_2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -187,12 +325,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -203,44 +341,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief SPI1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI1_Init(void)
-{
-
-  /* USER CODE BEGIN SPI1_Init 0 */
-
-  /* USER CODE END SPI1_Init 0 */
-
-  /* USER CODE BEGIN SPI1_Init 1 */
-
-  /* USER CODE END SPI1_Init 1 */
-  /* SPI1 parameter configuration*/
-  hspi1.Instance = SPI1;
-  hspi1.Init.Mode = SPI_MODE_MASTER;
-  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi1.Init.CRCPolynomial = 7;
-  if (HAL_SPI_Init(&hspi1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI1_Init 2 */
-
-  /* USER CODE END SPI1_Init 2 */
-
 }
 
 /**
@@ -265,7 +365,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_SOFT;
+  hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
   hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -278,6 +378,51 @@ static void MX_SPI2_Init(void)
   /* USER CODE BEGIN SPI2_Init 2 */
 
   /* USER CODE END SPI2_Init 2 */
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 31999;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 2999;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
 
 }
 
@@ -297,7 +442,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -358,15 +503,79 @@ static void MX_USART2_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PC11 PC12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_12;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
+
+void bma400_init(){
+
+      /* BMA400 INTERFACE */
+
+      bma400_dev* bma400ptr = NULL;
+
+      bma400_sensor_data bma400SensorData = {0};
+//      bma400SensorData.sensortime = 0;
+//      bma400SensorData.x = 0;
+//      bma400SensorData.y = 0;
+//      bma400SensorData.z = 0;
+      set_bma400_interface(BMA400_SPI_INTF, bma400ptr);
+      bma400ptr->intf_ptr = &hspi2;
+
+      fill_bma400_config_params(bma400ptr);
+
+
+
+ }
+
+
+
+
+//HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
+//
+//
+//    HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET);
+//    HAL_Delay(3000);
+//    HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_RESET);
+//
+//}
+
+void bc95_init(){
+
+
+    struct bc95_dev * bc95ptr = NULL;
+
+    init_bc95_interface(bc95ptr,huart1);
+
+    bc95_at_start_check(bc95ptr);
+
+}
+
+void init_bc95_interface(struct bc95_dev * bc95, UART_HandleTypeDef intfPointer){
+
+    bc95->intf_ptr = intfPointer;
+    bc95->write = uart_register_write;
+    bc95->read = &uart_register_read;
+//    bc95->read_it = uart_register_read_it;
+
+}
 
 /* USER CODE END 4 */
 

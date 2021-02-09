@@ -75,7 +75,7 @@ extern "C" {
  * @retval Postive Warning
  * @retval Negative Error
  */
-int8_t bma400_init(struct bma400_dev *dev);
+int8_t fill_bma400_config_params(struct bma400_dev *dev);
 
 /**
  * \ingroup bma400

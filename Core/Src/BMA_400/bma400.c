@@ -550,13 +550,13 @@ static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const
  */
 static int8_t enable_self_test(const struct bma400_dev *dev);
 
-int8_t bma400_init(struct bma400_dev *dev)
+int8_t fill_bma400_config_params(struct bma400_dev *dev)
 {
-    int8_t rslt;
+    int8_t rslt = 0;
     uint8_t chip_id = 0;
 
     /* Check for null pointer in the device structure*/
-    rslt = null_ptr_check(dev);
+    //rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
     if (rslt == BMA400_OK)
@@ -669,7 +669,8 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
         }
 
         /* Read the data from the reg_addr */
-        rslt = dev->read(dev->intf_ptr,dev->dev_id, reg_addr, temp_buff, temp_len);
+        rslt = HAL_SPI_Receive(dev->intf_ptr,reg_addr,temp_len,1000);
+//        rslt = dev->read(dev->intf_ptr,dev->dev_id, reg_addr, temp_buff, temp_len);
         if (rslt == BMA400_OK)
         {
             for (index = 0; index < len; index++)

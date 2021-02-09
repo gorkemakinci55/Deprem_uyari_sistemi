@@ -1,4 +1,0 @@
-bma400_work_functions.c:10:6:quick_start_device_check	8	static
-bma400_work_functions.c:20:6:sleep_mode_to_normal_mode	24	static
-bma400_work_functions.c:53:6:reading_acceleration_data	32	static
-bma400_work_functions.c:79:6:init_activity_interrupt_on_gen1	40	static

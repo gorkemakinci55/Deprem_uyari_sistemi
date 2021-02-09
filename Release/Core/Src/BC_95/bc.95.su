@@ -1,3 +1,5 @@
-bc.95.c:11:8:uart_register_write	8	static
-bc.95.c:30:8:uart_register_read	8	static
-bc.95.c:50:6:at_command_send	8	static
+bc.95.c:13:8:uart_register_write	8	static
+bc.95.c:32:8:uart_register_read	8	static
+bc.95.c:51:8:uart_register_read_it	8	static
+bc.95.c:62:6:send_at_command	16	static
+bc.95.c:71:7:read_at_command	16	static

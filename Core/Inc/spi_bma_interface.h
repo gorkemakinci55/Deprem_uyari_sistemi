@@ -18,7 +18,7 @@ int8_t spi_register_write(void* intfPtr,uint8_t spi_id, uint8_t reg_addr, uint8_
 
 int8_t spi_register_read(void* intfPtr,uint8_t spi_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t length);
 
-void set_interface(enum bma400_intf intf, struct bma400_dev *dev, void* intfPointer);
+void set_bma400_interface(enum bma400_intf intf, struct bma400_dev *dev);
 
 //void configure_dev_ptr(bma400_dev* devPtr);
 

@@ -1,5 +1,9 @@
-bc95_work_functions.c:11:6:init_bc95_interface	0	static
-bc95_work_functions.c:18:6:bc95_at_start_check	16	static
-bc95_work_functions.c:43:6:bc95_connection_status	0	static
-bc95_work_functions.c:55:6:bc95_establish_network_connection	0	static
-bc95_work_functions.c:60:6:bc95_test_IP_network_connectivity_to_remote_host	0	static
+bc95_work_functions.c:14:6:init_bc95_interface	0	static
+bc95_work_functions.c:23:6:bc95_at_start_check	16	static
+bc95_work_functions.c:51:6:bc95_connection_status	0	static
+bc95_work_functions.c:63:6:bc95_establish_network_connection	0	static
+bc95_work_functions.c:67:6:set_manually_register_on_network	120	static
+bc95_work_functions.c:82:6:reboot_module_by_software	8	static
+bc95_work_functions.c:88:6:set_functionality_mode	16	static
+bc95_work_functions.c:160:6:trigger_network_attachment	16	static
+bc95_work_functions.c:212:6:bc95_test_IP_network_connectivity_to_remote_host	0	static

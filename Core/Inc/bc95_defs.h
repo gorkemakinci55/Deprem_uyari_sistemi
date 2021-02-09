@@ -11,6 +11,7 @@
 #define INC_BC95_DEFS_H_
 
 typedef int8_t (*bc95_com_fptr_t)(void *intfPtr, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+typedef int8_t (*bc95_com_it_fptr_t)(void *intfPtr, uint8_t *pData, uint16_t Size);
 
 enum unsolicityStatus{
 
@@ -30,16 +31,23 @@ typedef struct bc95_dev{
 
     /* Interface handle pointer */
 
-	void *intf_ptr;
+    UART_HandleTypeDef intf_ptr;
 
 	/* bus read pointer function */
 
 	bc95_com_fptr_t read;
 
+	/* bus read interrupt pointer function */
+
+	bc95_com_it_fptr_t read_it;
+
 	/*bus write pointer function */
 
 	bc95_com_fptr_t write;
 
+	/*bus write interrupt pointer function */
+
+	bc95_com_it_fptr_t write_it;
 };
 
 

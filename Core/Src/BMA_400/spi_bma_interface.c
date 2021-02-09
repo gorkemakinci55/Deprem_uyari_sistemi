@@ -55,7 +55,7 @@ int8_t delay_function(int8_t delayTimer){
 	HAL_Delay(delayTimer);
 }
 
-void set_interface(enum bma400_intf intf, struct bma400_dev *dev , void* intfPointer)
+void set_bma400_interface(enum bma400_intf intf, struct bma400_dev *dev)
 {
     switch (intf)
     {
@@ -68,7 +68,7 @@ void set_interface(enum bma400_intf intf, struct bma400_dev *dev , void* intfPoi
             dev->intf = BMA400_I2C_INTF;
             break;
         case BMA400_SPI_INTF:
-            dev->intf_ptr = intfPointer; /* To attach your interface device reference */
+            dev->intf_ptr = NULL; /* To attach your interface device reference */
             dev->dev_id = CHIP_1; /* Could be used to identify the chip select line. */
             dev->delay_ms = delay_function;
             dev->read = spi_register_read;

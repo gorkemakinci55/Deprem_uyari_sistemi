@@ -3,7 +3,7 @@ bma400.c:2515:13:check_mapped_interrupts	0	static
 bma400.c:3106:13:unpack_accel.isra.1	20	static
 bma400.c:605:8:bma400_set_regs	40	static
 bma400.c:652:8:bma400_get_regs	48	dynamic
-bma400.c:553:8:bma400_init	32	static
+bma400.c:553:8:fill_bma400_config_params	32	static
 bma400.c:698:8:bma400_soft_reset	24	static
 bma400.c:722:8:bma400_set_power_mode	32	static
 bma400.c:755:8:bma400_get_power_mode	24	static

@@ -651,6 +651,8 @@
 #define BMA400_ST_ACC_Y_AXIS_SIGNAL_DIFF UINT16_C(1200)
 #define BMA400_ST_ACC_Z_AXIS_SIGNAL_DIFF UINT16_C(250)
 
+
+
 /*
  * Interface selection enums
  */
@@ -1387,6 +1389,8 @@ typedef struct bma400_dev
     /* User set read/write length */
     uint16_t read_write_len;
 }bma400_dev;
+
+bma400_dev* bma400ptr;
 
 #endif /* BMA400_DEFS_H_ */
 /*! @endcond */
