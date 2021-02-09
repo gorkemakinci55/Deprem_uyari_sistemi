@@ -139,6 +139,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
+  init_queue(&dataQueue);
   /* USER CODE BEGIN 2 */
   //bc95_init();
   //bma400_init();
@@ -187,61 +188,32 @@ int main(void)
           gorkem = HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxBuf_IT,1);
       }
 
-      while(DATA_READY){
+
           uartReady = 1;
-
-          parsedData[wordIndex][charIndex] = dequeue(&dataQueue);
-          int temp2 = charIndex - 1;
-
-          if(parsedData[wordIndex][charIndex] == '\n' && parsedData[wordIndex][temp2] == '\r'){
-              //HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
-              charIndex = 0;
-              if(parsedData[wordIndex][0] == 'N' && parsedData[wordIndex][1] == 'e' && parsedData[wordIndex][2] == 'u' && parsedData[wordIndex][3] == 'l'){
-                  HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
-//                  wordIndex = 0;
-//                  charIndex = 0;
-                  AT_READY_FLAG = 1;
-                  //AT_Waiting_Flag = 1;
-                //  HAL_UART_AbortReceive_IT(&huart1);
-                  DATA_READY = 0;
-                  break;
-              }
-              ++wordIndex;
-              DATA_READY = 0;
-              break;
-          }
-          ++charIndex;
-          //          if(rxBuf[rxIndex] == 'K' && rxBuf[temp2] == 'O' && AT_READY_FLAG == 1 && AT_Waiting_Flag == 1){
-          //              DATA_READY = 0;
-          //              break;
-          //          }
-          DATA_READY = 0;
-      }
-
-      if(uartReady == 1 && AT_Transmit_FLag == 1 && AT_Waiting_Flag == 0){
-            //HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
-          switch (count){
-          case 0:
-
-              HAL_UART_Transmit_IT(&huart1,"AT+CGSN=1",9);
-              for(int i = 0; i< 10; ++i){
-                  memset(parsedData[i],0,50);
-              }
-              break;
-
-          case 1:
-              //HAL_UART_Transmit_IT(&huart1,"ATI",3);
-              break;
-
-          case 2:
-
-
-              //HAL_UART_Transmit_IT(&huart1,"ATE1",4);
-              break;
+          if(gorkem == HAL_TIMEOUT){
 
           }
 
-      }
+          //parsedData[wordIndex][charIndex] = dequeue(&dataQueue);
+          //int temp2 = charIndex - 1;
+
+//          if(parsedData[wordIndex][charIndex] == '\n' && parsedData[wordIndex][temp2] == '\r'){
+//              //HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
+//              charIndex = 0;
+//              if(parsedData[wordIndex][0] == 'N' && parsedData[wordIndex][1] == 'e' && parsedData[wordIndex][2] == 'u' && parsedData[wordIndex][3] == 'l'){
+//                  HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
+//                  AT_READY_FLAG = 1;
+//                  DATA_READY = 0;
+//                  break;
+//              }
+//              ++wordIndex;
+//              break;
+//          }
+//          ++charIndex;
+
+
+
+
   /* USER CODE END 3 */
 }
 }
@@ -249,13 +221,9 @@ int main(void)
   void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
       if(huart->Instance==USART1 ){
-           //HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_11);
-           int succesful = enqueue(&dataQueue, rxBuf_IT);
-           DATA_READY = 1;
-           if(AT_Waiting_Flag == 1){
-               ++rxcallbackCount;
-           }
-           HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxBuf_IT, 1);
+
+           enqueue(&dataQueue, rxBuf_IT);
+           gorkem = HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxBuf_IT, 1);
       }
   }
 
