@@ -1,4 +1,0 @@
-spi_bma_interface.c:10:8:spi_register_write	8	static
-spi_bma_interface.c:24:8:spi_register_read	8	static
-spi_bma_interface.c:29:8:delay_function	8	static
-spi_bma_interface.c:34:6:set_interface	8	static

@@ -8,6 +8,8 @@
 #ifndef INC_SPI_BMA_INTERFACE_H_
 #define INC_SPI_BMA_INTERFACE_H_
 
+#define CHIP_1 UINT8_C(0x01)
+
 #include "stm32l0xx_hal.h"
 #include "bma400_defs.h"
 #include "bma400.h"
@@ -16,7 +18,7 @@ int8_t spi_register_write(void* intfPtr,uint8_t spi_id, uint8_t reg_addr, uint8_
 
 int8_t spi_register_read(void* intfPtr,uint8_t spi_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t length);
 
-void set_interface(enum bma400_intf intf, struct bma400_dev *dev, void* intfPointer);
+void set_bma400_interface(enum bma400_intf intf, struct bma400_dev *dev);
 
 //void configure_dev_ptr(bma400_dev* devPtr);
 

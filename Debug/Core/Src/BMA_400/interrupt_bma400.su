@@ -1,0 +1,5 @@
+interrupt_bma400.c:10:6:mapping_gen1_interrupt_to_int1	24	static
+interrupt_bma400.c:19:6:interrupt_latching_selection	16	static
+interrupt_bma400.c:29:6:generic1_interrupt_configuration	24	static
+interrupt_bma400.c:37:6:generic1_interrupt_to_inactivity	16	static
+interrupt_bma400.c:42:6:set_threshold_interrupt	16	static

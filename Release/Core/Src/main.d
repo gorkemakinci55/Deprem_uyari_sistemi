@@ -27,7 +27,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart.h \
  ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart_ex.h \
  ../Core/Inc/bma400.h ../Core/Inc/bma400_defs.h \
- ../Core/Inc/spi_bma_interface.h
+ ../Core/Inc/spi_bma_interface.h ../Core/Inc/interrupt_bma400.h \
+ ../Core/Inc/bc95_work_functions.h ../Core/Inc/bc95.h \
+ ../Core/Inc/bc95_defs.h
 
 ../Core/Inc/main.h:
 
@@ -90,3 +92,11 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/bma400_defs.h:
 
 ../Core/Inc/spi_bma_interface.h:
+
+../Core/Inc/interrupt_bma400.h:
+
+../Core/Inc/bc95_work_functions.h:
+
+../Core/Inc/bc95.h:
+
+../Core/Inc/bc95_defs.h:
