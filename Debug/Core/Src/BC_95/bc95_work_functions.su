@@ -1,0 +1,8 @@
+bc95_work_functions.c:22:6:bc95_at_start_check	176	static
+bc95_work_functions.c:51:6:bc95_connection_status	16	static
+bc95_work_functions.c:63:6:bc95_establish_network_connection	8	static
+bc95_work_functions.c:67:6:set_manually_register_on_network	136	static
+bc95_work_functions.c:82:6:reboot_module_by_software	16	static
+bc95_work_functions.c:88:6:set_functionality_mode	24	static
+bc95_work_functions.c:160:6:trigger_network_attachment	24	static
+bc95_work_functions.c:212:6:bc95_test_IP_network_connectivity_to_remote_host	8	static
